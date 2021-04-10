@@ -1,22 +1,94 @@
-ALGORITHM Task3
+PROCEDURE dot_product(v1,v2 : ARRAY_OF INTEGER VAR dot : INTEGER)
 VAR
-    arr1 : ARRAY_OF INTEGER[100];
-    arr2 : ARRAY_OF INTEGER[100];
-    i,j:INTEGER;
-    sum:INTEGER:=0;
-    found:BOOLEAN;
+    i : INTEGER;
 BEGIN
-    FOR i FROM 0 TO arr1.length-1 STEP 1  DO
-        found:=FALSE;
-        FOR j FROM 0 TO arr2.length-1 STEP 1  DO
-            IF (arr1[i] = arr2[j]) THEN
-                found:=TRUE;
-                BREAK;
-            END_IF
-        END_FOR
-        IF (found = TRUE) THEN
-            sum := sum + 2*arr1[i]
-        END_IF
-    END_FOR
-    Write(sum)
+    dot := 0;
+    i := 0 ;
+    IF (v1.length <> v2.length ) THEN
+        Write("les vecteurs n'ont pas la même dimension");
+        dot=NaN;
+    ELSE
+        WHILE (i <=v1.length-1) DO
+            dot:= dot + v1[i]*v2[i];
+            i:= i+1;
+        END_WHILE
+    END_IF
+END
+
+// 2)
+
+ALGORITHM orth_vectors
+VAR
+    v1,v2 : ARRAY_OF INTEGER [50];
+    dot : INTEGER;
+BEGIN
+//repeter jusqu'à l'utilisateur donne une valeur positive
+REPEAT
+    Write("donner la taille de v1");
+    Read(n1);
+UNTIL (n1>0)
+    n1 := read_size();
+    read_array(n1,v1);
+
+REPEAT
+    Write("donner la taille de v2");
+    Read(n2);
+UNTIL (n2>0)
+    n2 := read_size();
+    read_array(n2,v2);
+
+    dot_product(v1,v2,dot);
+    IF (dot = 0) THEN
+        Write("V1 et V2 sont orthogonaux");
+    ELSE
+        Write("V1 et V2 ne sont pas orthogonaux");
+    END_IF
+END
+
+//--------------------------------exercice 3)------------------------------------------
+
+FUNCTION dot_product(v1,v2 : ARRAY_OF INTEGER) : INTEGER
+VAR
+    i, dot : INTEGER;
+BEGIN
+    dot :=0;
+    i:=0;
+    IF (v1.length <> v2.length) THEN
+        Write("les vecteurs n'ont pas la même dimension");
+        RETURN NaN; 
+    ELSE
+        WHILE (i <v1.length ) DO
+            dot := dot + v1[i]*v2[i];
+            i:=i+1;
+        END_WHILE
+    END_IF
+    RETURN dot ;
+END
+
+ALGORITHM orth_vectors
+VAR
+    v1,v2 : ARRAY_OF INTEGER [50];
+    dot : INTEGER;
+BEGIN
+//repeter jusqu'à l'utilisateur donne une valeur positive
+REPEAT
+    Write("donner la taille de v1")
+    Read(n1)
+UNTIL (n1>0)
+    n1 := read_size();
+    read_array(n1,v1);
+
+REPEAT
+    Write("donner la taille de v2")
+    Read(n2)
+UNTIL (n2>0)
+    n2 := read_size();
+    read_array(n2,v2);
+
+    dot := dot_product(v1,v2);
+    IF (dot = 0) THEN
+        Write("V1 et V2 sont orthogonaux");
+    ELSE
+        Write("V1 et V2 ne sont pas orthogonaux");
+    END_IF
 END
